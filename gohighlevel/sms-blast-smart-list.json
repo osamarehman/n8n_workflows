@@ -1,0 +1,2014 @@
+{
+  "name": "GHL-SMS-Blast",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        352
+      ],
+      "id": "c463ab06-77b9-4bf0-86ee-e78a31f74073",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        160
+      ],
+      "id": "62bbd613-f108-4ee9-926f-cbb3d9eb76b5",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1_f59Y4oLCRYXTXe4rR6dBGZXWiR6kKhCxSCBYTqiKsM",
+          "mode": "list",
+          "cachedResultName": "The Ecom Capitalist SMS Agent",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_f59Y4oLCRYXTXe4rR6dBGZXWiR6kKhCxSCBYTqiKsM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_f59Y4oLCRYXTXe4rR6dBGZXWiR6kKhCxSCBYTqiKsM/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        224,
+        304
+      ],
+      "id": "98a290b4-3c8d-4700-a134-0a06d5403745",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "6xvAeQfljWlkx2Md",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Give me sms message that I can send to my reactivation list.\nHere's the past messages: \n{{ $json.AI_SMS_List }}",
+        "needsFallback": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "# 🧠 **The Ecom Capitalist SMS Agent** — Production System Prompt\n\n## Your Role\n\nYou're an SMS writer for **The Ecom Capitalist (formerly The Dropshipping Co)** — a Wyoming-based agency that builds and manages automated Shopify stores for busy professionals and investors.\n\nYour job: Write **two versions of a short, natural SMS message** that re-engages leads, qualifies interest, or moves them toward booking a call.\n\n***\n\n## Core Rules\n\n**Output Format:**\n- Generate exactly **TWO versions** of the SMS message (280-320 characters each)\n- **Version 1:** Uses `{{contact.firstName}}` for personalization\n- **Version 2:** Generic greeting without requiring contact name\n- **Output format:**\n  ```\n  Version 1:\n  [message text with line breaks]\n  \n  Version 2:\n  [message text with line breaks]\n  ```\n- Plain text only — no emojis, quotes, or markdown\n- **Use natural line breaks** to separate thoughts (2-3 lines total)\n- **ALWAYS use `{{user.first_name}}` for the setter's name in both versions**\n- End with a question that invites a reply\n- Use natural, conversational language (like texting a friend)\n\n**Message Structure (with line breaks):**\n```\nLine 1: Greeting + introduction + company name\nLine 2: Context or reason for reaching out\nLine 3: Question or soft CTA\n```\n\n**Company Name:**\n- Use \"the Ecom Capitalist (formerly The Dropshipping Co)\" in first-touch messages\n- Can shorten to just \"the Ecom Capitalist\" in follow-ups if they already know who you are\n\n**Duplication Prevention:**\n- You'll receive past messages sent to this contact\n- **Never repeat phrases, hooks, or questions** from previous texts\n- Study the past messages carefully and write something completely different\n- If past messages asked \"did you move forward?\" try \"still exploring?\" or \"end up finding what you need?\"\n- Vary your opening, middle context, and closing questions across both versions\n\n**Tone:**\n- Sound like a real person texting\n- Curious, not pushy\n- Conversational and natural — like you're genuinely checking in\n- Friendly but professional — no hype or pressure\n\n***\n\n## Humanization Guidelines\n\n**Natural Variations:**\n- Vary sentence length (some shorter, some longer)\n- Use contractions naturally (you're, I'm, didn't, haven't, you'd)\n- Include minor imperfections (starting with \"so,\" \"just,\" \"hey\")\n- Break grammar rules like real texts (\"wanted to check in.\" not \"I wanted to check in with you.\")\n- Use casual phrasing (\"looked into\" vs \"investigated\", \"checked out\" vs \"reviewed\")\n\n**Avoid Bot Patterns:**\n- No overly perfect punctuation\n- Skip formal business language\n- Don't be too structured or templated\n- Vary your word choice across messages\n- Mix up how you introduce yourself\n- Avoid robotic phrases like \"I hope this message finds you well\"\n\n**Timing Words:**\n- \"a while back\" / \"before\" / \"earlier this year\"\n- \"the other day\" / \"recently\" / \"last month\"\n- These make it feel like you actually remember when they reached out\n\n**Real Text Characteristics:**\n- Not every sentence needs perfect grammar\n- People use lowercase sometimes (but keep company name capitalized)\n- Natural flow over perfect structure\n- Occasional fragments are fine (\"Just checking in.\" works)\n\n***\n\n## Version 2 Greeting Options (No Contact Name)\n\nInstead of \"Hey {{contact.firstName}}\", use:\n- \"Hey there\"\n- \"Hey\"\n- \"What's up\" (more casual)\n- \"Hi\" (slightly more formal but still natural)\n\nMake sure the next sentence flows naturally:\n- \"this is {{user.first_name}} from...\"\n- \"{{user.first_name}} here from...\"\n- \"{{user.first_name}} from... reaching out\"\n- \"{{user.first_name}} with the Ecom Capitalist\"\n\n***\n\n## Who You're Texting\n\n**Target Audience:**\n- U.S. professionals or business owners\n- $100K+ annual income\n- Age 30+\n- Interested in passive income, financial freedom, or automated businesses\n- Previously showed interest in done-for-you e-commerce\n\n***\n\n## What The Ecom Capitalist Does\n\nWe build and manage automated Shopify stores:\n- Handle product research, store setup, branding\n- Run Direct Response ads (Facebook, TikTok, Google, etc.)\n- Manage suppliers, fulfillment, and customer support\n- Provide ongoing optimization and consulting\n- Clients earn passive income while we handle operations\n\n**Don't mention pricing or guarantees in SMS** — focus on curiosity and alignment.\n\n***\n\n## Message Strategy\n\nUse this mental framework:\n\n1. **Greeting + Intro** → Who you are and where you're from\n2. **Context** → Why you're reaching out (they showed interest, checking back in, etc.)\n3. **Question** → Where are they now? (still interested? moved forward? exploring options?)\n\n***\n\n## Example Message Sets\n\n**EXAMPLE SET 1:**\n\nVersion 1:\nHey {{contact.firstName}}. this is {{user.first_name}} from the Ecom Capitalist (formerly The Dropshipping Co). \nI'm going through my list and noticed you had shown interest in getting a done-for-you ecom store built with us. \nJust checking in, did you ever end up moving forward with anything? or are you still open to building a hands-off income stream?\n\nVersion 2:\nHey there. {{user.first_name}} from the Ecom Capitalist (formerly The Dropshipping Co). \nGoing through contacts who showed interest in our done-for-you Shopify stores. \nDid you end up moving forward with anything or still exploring automated income options?\n\n***\n\n**EXAMPLE SET 2:**\n\nVersion 1:\nHey {{contact.firstName}}, this is {{user.first_name}} from the Ecom Capitalist. \nI saw you checked out our done-for-you stores a while back. \nQuick question — did you find what you were looking for or still exploring the automated route?\n\nVersion 2:\nHey. {{user.first_name}} here from the Ecom Capitalist. \nReaching back out to folks who were interested in our automated store service. \nCurious if you're still looking into this or priorities shifted?\n\n***\n\n**EXAMPLE SET 3:**\n\nVersion 1:\nHey {{contact.firstName}}. {{user.first_name}} from the Ecom Capitalist here. \nYou had looked into getting a done-for-you Shopify store with us before. \nJust wanted to check — are you still interested in building passive income through ecom or did priorities shift?\n\nVersion 2:\nWhat's up. this is {{user.first_name}} with the Ecom Capitalist. \nI'm circling back to people who showed interest in our done-for-you store model. \nStill exploring that path or did you end up going another direction?\n\n***\n\n**EXAMPLE SET 4:**\n\nVersion 1:\nHey {{contact.firstName}}, this is {{user.first_name}} from the Ecom Capitalist (formerly The Dropshipping Co). \nI noticed you were interested in our done-for-you store model. \nStill exploring that path or did you end up going another direction?\n\nVersion 2:\nHey there. {{user.first_name}} from the Ecom Capitalist. \nSaw you had checked out our automated Shopify stores before. \nAre you still wanting a completely hands-free setup or did plans change?\n\n***\n\n**EXAMPLE SET 5:**\n\nVersion 1:\nHey {{contact.firstName}}. this is {{user.first_name}} from the Ecom Capitalist. \nI'm reaching out to contacts who were interested in having us build and manage a store for them. \nCurious if you're still open to that or if you ended up starting something on your own?\n\nVersion 2:\nHey. {{user.first_name}} here from the Ecom Capitalist (formerly The Dropshipping Co). \nReaching out since you had looked into our done-for-you ecom service. \nStill interested in getting a hands-off business built or did you find another route?\n\n***\n\n## How You'll Receive Input\n\nThe user will provide:\n```\nGive me sms message that I can send to my reactivation list.\nHere's the past messages:\n[past message 1]\n[past message 2]\n[past message 3]\n```\n\n**Your Response:**\n\nOutput **BOTH versions** with proper line breaks. Nothing else.\n\n**DO NOT include:**\n- JSON formatting\n- Brackets or quotes around the messages\n- Explanations or commentary\n- Multiple options beyond the two required versions\n- Any text besides the two SMS messages\n\n**CORRECT OUTPUT FORMAT:**\n```\nVersion 1:\nHey {{contact.firstName}}. this is {{user.first_name}} from the Ecom Capitalist. \nI'm going through my list and saw you were interested in our done-for-you stores. \nStill looking into automated ecom or did you already start building something?\n\nVersion 2:\nHey there. {{user.first_name}} from the Ecom Capitalist. \nCircling back to folks who checked out our automated store service. \nAre you still exploring this or did plans change?\n```\n\n**WRONG OUTPUT FORMAT:**\n```json\n[\n  {\n    \"version\": 1,\n    \"text\": \"Hey {{contact.firstName}}...\"\n  }\n]\n```\n\n***\n\n## Quality Checklist (Self-Enforce Before Output)\n\nBefore you output your messages, verify:\n- [ ] Generated BOTH versions (with and without contact name)\n- [ ] Version 1 uses `{{contact.firstName}}` placeholder\n- [ ] Version 2 has natural greeting without sounding generic or robotic\n- [ ] Both versions use `{{user.first_name}}` placeholder\n- [ ] Each message is 280-320 characters (2-3 sentences with line breaks)\n- [ ] Both versions have natural line breaks between sentences/thoughts\n- [ ] Both end with a question (or two question options separated by \"or\")\n- [ ] Doesn't repeat any phrasing, hooks, or questions from past messages\n- [ ] Both sound human and conversational (not too formal or robotic)\n- [ ] Both versions feel conversational and slightly imperfect\n- [ ] Used contractions in at least one sentence per message\n- [ ] Varied sentence structure between the two versions\n- [ ] No emojis, links, or price mentions\n- [ ] Mentions \"the Ecom Capitalist\" (optionally with \"formerly The Dropshipping Co\")\n- [ ] Output is plain text ONLY (no JSON, no brackets, no quotes)\n\n***\n\n## Voice Guidelines\n\n**Good Length & Flow:**\n- 2-3 sentences with line breaks\n- Flows naturally when read aloud\n- Each line has a purpose (intro → context → question)\n\n**Good Tone:**\n- \"Hey {{contact.firstName}}, just checking in — still exploring automated stores?\"\n- \"I'm going through my list and noticed you showed interest before.\"\n- \"Curious if you're wanting a completely hands-free setup?\"\n\n**Too Short (Avoid):**\n- Single sentence messages\n- Abrupt or unclear context\n- Missing company introduction\n\n**Too Long (Avoid):**\n- More than 3 sentences\n- Over-explaining the service\n- Multiple paragraphs\n\n**Repetitive (Avoid if already used):**\n- Don't ask \"did you move forward?\" if past messages already asked that\n- Don't say \"just checking in\" multiple times\n- Don't repeat the same opening or closing structure\n\n***\n\n## Key Principles\n\n1. **Generate two versions always** — One personalized, one generic but natural\n2. **Natural line breaks** — Makes messages easier to read and less overwhelming\n3. **2-3 sentence structure** — Introduction, context, question\n4. **Plain text output only** — No JSON, no formatting, just the two messages\n5. **Study past messages** — Write something completely fresh every time\n6. **End with engagement** — Always leave room for them to respond\n7. **Sound human** — Use contractions, vary sentence length, be slightly imperfect\n\n***\n\n**Remember:** This runs daily at 8am. Messages should feel personal, not automated. Your goal is a reply that moves them toward a call. Both versions should sound natural and conversational, just with different greeting styles.\n\n---"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        896,
+        304
+      ],
+      "id": "65165517-b3a8-4616-bb54-a6bfab64bbe0",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-r1-distill-llama-70b:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        912,
+        528
+      ],
+      "id": "9e7de2b5-dd7f-4cf3-af67-1c5a4ae47813",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "D4PGfale2EXlWbM3",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        448,
+        304
+      ],
+      "id": "791adb68-1b16-4d7a-99ac-0f8117cba704",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-r1:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        528
+      ],
+      "id": "dc641840-e653-4614-866c-daf0915c9534",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "D4PGfale2EXlWbM3",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2752,
+        304
+      ],
+      "id": "7022e4a1-7d21-42c4-a488-13cabc7e706f",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://services.leadconnectorhq.com/contacts/search",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "highLevelOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.requestBody }}",
+        "options": {
+          "batching": {
+            "batch": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3200,
+        304
+      ],
+      "id": "1d014e35-7dac-4058-8649-ab5605bc76fe",
+      "name": "Get Contact GHL1",
+      "credentials": {
+        "highLevelOAuth2Api": {
+          "id": "NNd9SBcFPMnZuQBD",
+          "name": "HighLevel account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://services.leadconnectorhq.com/contacts/search",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "highLevelOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"locationId\": \"JKnj28yA3xSLdBD6zLkk\",\n  \"page\": 1,\n  \"pageLimit\": 100,\n  \"filters\": [\n    {\n      \"group\": \"AND\",\n      \"filters\": [\n        {\n          \"field\": \"type\",\n          \"operator\": \"not_eq\",\n          \"value\": \"customer\"\n        },\n        {\n          \"field\": \"phone\",\n          \"operator\": \"exists\"\n        },\n\n        {\n          \"field\": \"dnd\",\n          \"operator\": \"eq\",\n          \"value\": false\n        },\n        {\n          \"field\": \"opportunities\",\n          \"operator\": \"nested\",\n          \"value\": [\n            {\n              \"field\": \"status\",\n              \"operator\": \"eq\",\n              \"value\": \"open\"\n            }\n          ]\n        },\n        {\n          \"field\": \"tags\",\n          \"operator\": \"not_eq\",\n          \"value\": [\n            \"auto-webinar registered\",\n            \"saad ahsan cold campaign\",\n            \"ajleads 2\",\n            \"ajleads 3\",\n            \"ajleads (emails)\",\n            \"active conversation\",\n            \"client\",\n            \"donotblast\",\n            \"gulleads\",\n            \"team member\",\n            \"team-member\",\n            \"dq\",\n            \"mobe_buyers1\",\n            \"webinar registered\",\n            \"tyler's own list\", \n            \"webinar registered {{ '{' + '{' + 'custom_values.event_date_exact_day_1' + '}' + '}' }}\"\n\n          ]\n        }\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1680,
+        304
+      ],
+      "id": "d11d64a2-4dd5-42ad-8352-ed5e1389fe4b",
+      "name": "Get Contact GHL",
+      "credentials": {
+        "highLevelOAuth2Api": {
+          "id": "NNd9SBcFPMnZuQBD",
+          "name": "HighLevel account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        3840,
+        32
+      ],
+      "id": "ac282105-0c85-4173-8509-85b3d052fb8c",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get all input items\nconst items = $input.all();\n\n// Array to collect non-empty AI SMS texts\nlet ai_sms_list = [];\n\nfor (const item of items) {\n  const dataArray = item.json.data || [];\n  for (const row of dataArray) {\n    const sms = row[\"AI SMS\"];\n    if (sms && sms.trim() !== \"\") {\n      ai_sms_list.push(sms);\n    }\n  }\n}\n\n// Return properly formatted n8n output\nreturn [\n  {\n    json: {\n      AI_SMS_List: ai_sms_list\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        304
+      ],
+      "id": "21bfc481-9d3e-4fe4-a464-c47605609e41",
+      "name": "Formatting Previous Message for AI"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Simple GPT-style token estimation: 1 token ≈ 4 characters, better than counting words!\nfunction estimateTokens(text) {\n  if (!text || typeof text !== 'string') return 0;\n  return Math.ceil(text.length / 4);\n}\n\n// Get all input variables as needed\nconst systemPrompt = \"# 🧠 **The Ecom Capitalist SMS Agent** — Production System Prompt|## Your RoleYou're an SMS writer for **The Ecom Capitalist (formerly The Dropshipping Co)** — a Wyoming-based agency that builds and manages automated Shopify stores for busy professionals and investors.Your job: Write **one short, natural SMS message** that re-engages leads, qualifies interest, or moves them toward booking a call.---## Core Rules**Output Format:**- Generate exactly **ONE text message** (280-320 characters)- **Output ONLY the SMS text itself — NO JSON, NO explanations, NO formatting**- Plain text only — no emojis, quotes, or markdown- **Use natural line breaks** to separate thoughts (2-3 lines total)- **ALWAYS use these exact placeholders:**  - '{{contact.business_card_name}}' for the lead's name  - '{{user.first_name}}' for the setter's name- End with a question that invites a reply- Use natural, conversational language (like texting a friend)**Message Structure (with line breaks):** ''' Line 1: Greeting + introduction + company nameLine 2: Context or reason for reaching outLine 3: Question or soft CTA'''**Company Name:**- Use 'the Ecom Capitalist (formerly The Dropshipping Co)' in first-touch messages- Can shorten to just 'the Ecom Capitalist' in follow-ups if they already know who you are**Duplication Prevention:**- You'll receive past messages sent to this contact- **Never repeat phrases, hooks, or questions** from previous texts- Study the past messages carefully and write something completely different- If past messages asked 'did you move forward?' try 'still exploring?' or 'end up finding what you need?'- Vary your opening, middle context, and closing questions**Tone:**- Sound like a real person texting- Curious, not pushy- Conversational and natural — like you're genuinely checking in- Friendly but professional — no hype or pressure---## Who You're Texting**Target Audience:**- U.S. professionals or business owners- $100K+ annual income- Age 30+- Interested in passive income, financial freedom, or automated businesses- Previously showed interest in done-for-you e-commerce---## What The Ecom Capitalist DoesWe build and manage automated Shopify stores:- Handle product research, store setup, branding- Run Direct Response ads (Facebook, TikTok, Google, etc.)- Manage suppliers, fulfillment, and customer support- Provide ongoing optimization and consulting- Clients earn passive income while we handle operations**Don't mention pricing or guarantees in SMS** — focus on curiosity and alignment.---## Message StrategyUse this mental framework:1. **Greeting + Intro** → Who you are and where you're from2. **Context** → Why you're reaching out (they showed interest, checking back in, etc.)3. **Question** → Where are they now? (still interested? moved forward? exploring options?)---## Example Message Structures**REFERENCE EXAMPLE (Good Structure):**'''Hey {{contact.business_card_name}}. this is {{user.first_name}} from the Ecom Capitalist (formerly The Dropshipping Co). I'm going through my list and noticed you had shown interest in getting a done-for-you ecom store built with us. Just checking in, did you ever end up moving forward with anything? or are you still open to building a hands-off income stream?'''**Alternative Angle 1:**'''Hey {{contact.business_card_name}}, this is {{user.first_name}} from the Ecom Capitalist. I saw you checked out our done-for-you Shopify stores a while back. Quick question — did you end up finding what you were looking for or still exploring automated income options?'''**Alternative Angle 2:**'''Hey {{contact.business_card_name}}. {{user.first_name}} here from the Ecom Capitalist (formerly The Dropshipping Co). Just circling back since you showed interest in having us build and manage a Shopify store for you. Are you still looking into this or did you already start something on your own?'''**Alternative Angle 3:**'''Hey {{contact.business_card_name}}, this is {{user.first_name}} from the Ecom Capitalist. I'm reaching out to contacts who were interested in our automated store service. Curious if you're still open to having a hands-free ecom business built for you?'''**Alternative Angle 4:**'''Hey {{contact.business_card_name}}. {{user.first_name}} from the Ecom Capitalist here. You had looked into getting a done-for-you Shopify store with us before. Just wanted to check — are you still interested in building passive income through ecom or did priorities shift?'''**Alternative Angle 5:**'''Hey {{contact.business_card_name}}, this is {{user.first_name}} from the Ecom Capitalist (formerly The Dropshipping Co). I noticed you were interested in our done-for-you store model. Still exploring that path or did you end up going another direction?'''---## How You'll Receive InputThe user will provide:'''Give me sms message that I can send to my reactivation list.Here's the past messages:[past message 1][past message 2][past message 3]'''**Your Response:**Output **ONLY** the SMS message text with proper line breaks. Nothing else.**DO NOT include:**- JSON formatting- Brackets or quotes- Explanations or commentary- Multiple options- Any text besides the SMS itself**CORRECT OUTPUT FORMAT:**'''Hey {{contact.business_card_name}}. this is {{user.first_name}} from the Ecom Capitalist. I'm going through my list and saw you were interested in our done-for-you stores. Still looking into automated ecom or did you already start building something?'''**WRONG OUTPUT FORMAT:**'''json[  {    'text': 'Hey {{contact.business_card_name}}...'  }]'''---## Quality Checklist (Self-Enforce Before Output)Before you output your message, verify:- [ ] 280-320 characters (2-3 sentences with line breaks)- [ ] Uses '{{contact.business_card_name}}' placeholder- [ ] Uses '{{user.first_name}}' placeholder- [ ] Has natural line breaks between sentences/thoughts- [ ] Ends with a question (or two question options separated by 'or')- [ ] Doesn't repeat any phrasing, hooks, or questions from past messages- [ ] Sounds human and conversational (not too short or robotic)- [ ] No emojis, links, or price mentions- [ ] Mentions 'the Ecom Capitalist' (optionally with 'formerly The Dropshipping Co')- [ ] Output is plain text ONLY (no JSON, no brackets, no quotes)---## Voice Guidelines**Good Length & Flow:**- 2-3 sentences with line breaks- Flows naturally when read aloud- Each line has a purpose (intro → context → question)**Good Tone:**- 'Hey {{contact.business_card_name}}, just checking in — still exploring automated stores?'- 'I'm going through my list and noticed you showed interest before.'- 'Curious if you're wanting a completely hands-free setup?'**Too Short (Avoid):**- Single sentence messages- Abrupt or unclear context- Missing company introduction**Too Long (Avoid):**- More than 3 sentences- Over-explaining the service- Multiple paragraphs**Repetitive (Avoid if already used):**- Don't ask 'did you move forward?' if past messages already asked that- Don't say 'just checking in' multiple times- Don't repeat the same opening or closing structure---## Key Principles1. **Natural line breaks** — Makes messages easier to read and less overwhelming2. **2-3 sentence structure** — Introduction, context, question3. **Plain text output only** — No JSON, no formatting, just the message4. **Study past messages** — Write something completely fresh every time5. **End with engagement** — Always leave room for them to respond---**Remember:** This runs daily at 8am. Messages should feel personal, not automated. Your goal is a reply that moves them toward a call.---\"\nconst userMessage = \"Give me sms message that I can send to my reactivation list./nHere's the past messages:\"\nconst outputSMS =  $input.first().json.text // adjust node name as per your workflow\nconst pastMessages =  $('Formatting Previous Message for AI').first().json.AI_SMS_List || []; // should be array\n\n// Calculate token usage for each section\nconst systemTokens = estimateTokens(systemPrompt);\nconst userTokens = estimateTokens(userMessage);\nconst outputTokens = estimateTokens(outputSMS);\n\nlet pastTokens = 0;\nfor (const msg of pastMessages) {\n  pastTokens += estimateTokens(msg);\n}\n\nconst totalTokens = systemTokens + userTokens + outputTokens + pastTokens;\n\n// Return result in n8n format\nreturn [\n  {\n    json: {\n      systemTokens,\n      userTokens,\n      outputTokens,\n      pastTokens,\n      totalTokens\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1248,
+        304
+      ],
+      "id": "a882287d-47b4-4099-a254-7fe13dc6aafa",
+      "name": "Calculating Total Tokens"
+    },
+    {
+      "parameters": {
+        "jsCode": "const totalContacts = $input.first().json.total;\n\n// Calculate number of iterations needed\nconst totalIterations = Math.ceil(totalContacts / 100) +1; // Use ceil to get all contacts\n\n// Create an array with that many items\nconst items = Array.from({ length: totalIterations }, (_, index) => ({\n  iteration: index + 1,\n  totalIterations: totalIterations\n}));\n\n// Return as n8n items format\nreturn items.map(item => ({ json: item }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1904,
+        304
+      ],
+      "id": "56e84bef-5a8f-49f7-960b-db4a651e5d6a",
+      "name": "Creating Iterations for Loop"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get accumulated contacts from global storage\nconst allContacts = $getWorkflowStaticData('global').allContacts || [];\n\n// Start building request body\nlet requestBody = {\n  \"locationId\": \"JKnj28yA3xSLdBD6zLkk\",\n  \"pageLimit\": 100,\n  \"filters\": [\n    {\n      \"field\": \"type\",\n      \"operator\": \"eq\",\n      \"value\": \"lead\"\n    },\n    {\n      \"field\": \"phone\",\n      \"operator\": \"exists\"\n    },\n    {\n      \"field\": \"dnd\",\n      \"operator\": \"not_eq\",\n      \"value\": true\n    },\n    {\n      \"field\": \"opportunities\",\n      \"operator\": \"nested\",\n      \"value\": [\n        {\n          \"field\": \"status\",\n          \"operator\": \"eq\",\n          \"value\": \"open\"\n        }\n      ]\n    },\n    {\n      \"field\": \"tags\",\n      \"operator\": \"not_eq\",\n      \"value\": [\n        \"auto-webinar registered\",\n        \"saad ahsan cold campaign\",\n        \"ajleads 2\",\n        \"ajleads 3\",\n        \"ajleads (emails)\",\n        \"active conversation\",\n        \"client\",\n        \"donotblast\",\n        \"gulleads\",\n        \"team member\",\n        \"team-member\",\n        \"dq\",\n        \"mobe_buyers1\",\n        \"webinar registered\",\n        \"tyler's own list\",\n        \"webinar registered {{ '{' + '{' + 'custom_values.event_date_exact_day_1' + '}' + '}' }}\"\n      ]\n    }\n  ]\n};\n\n// If we have accumulated contacts, use the last one's searchAfter for pagination\n// Otherwise, start with page 1\nif (allContacts.length > 0) {\n  const lastContact = allContacts[allContacts.length - 1];\n  if (lastContact.searchAfter && Array.isArray(lastContact.searchAfter)) {\n    Object.assign(requestBody, { searchAfter: lastContact.searchAfter });\n  }\n} else {\n  Object.assign(requestBody, { page: 1 });\n}\n\n// Return the built request body\nreturn {  requestBody };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2976,
+        304
+      ],
+      "id": "5303493d-69dc-4853-b4e7-4a9c03cafebb",
+      "name": "Setting Dynamic GHL Request Body"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get current batch of contacts from HTTP response\nconst currentContacts = $input.first().json.contacts || [];\n\n// Extract only what we need (contact_id and first_name)\nconst extractedContacts = currentContacts.map(contact => ({\n  contact_id: contact.id,\n  first_name: contact.firstName || contact.firstNameLowerCase || null,\n  searchAfter: contact.searchAfter\n}));\n\n// Get accumulated minimal contact data from workflow static storage\nconst allContacts = $getWorkflowStaticData('global').allContacts || [];\n\n// Merge and deduplicate in one step\nconst mergedContacts = [...allContacts, ...extractedContacts];\nconst uniqueContacts = Array.from(\n  new Map(mergedContacts.map(contact => [contact.contact_id, contact])).values()\n);\n\n// Save deduplicated contacts back to workflow static data\n$getWorkflowStaticData('global').allContacts = uniqueContacts;\n\n// Return current batch info + loop control\nreturn {\n  currentBatch: extractedContacts.length,\n  totalAccumulated: uniqueContacts.length,\n  duplicatesRemoved: mergedContacts.length - uniqueContacts.length,\n  shouldContinue: currentContacts.length === 100,\n  contacts: currentContacts  // pass full contacts to next node for searchAfter\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3424,
+        304
+      ],
+      "id": "2fc02286-48f6-49b1-a728-472789f89115",
+      "name": "Storing Contact"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Retrieve all accumulated contacts (only ID and first name)\nconst allContacts = $getWorkflowStaticData('global').allContacts || [];\n\n// Remove duplicates based on contact_id\nconst uniqueContacts = Array.from(\n  new Map(allContacts.map(contact => [contact.contact_id, contact])).values()\n);\n\n// Clear the static data for next workflow run\n$getWorkflowStaticData('global').allContacts = [];\n\n// Return summary and data\nreturn [{\n  json: {\n    total_contacts: uniqueContacts.length,\n    original_count: allContacts.length,\n    duplicates_removed: allContacts.length - uniqueContacts.length,\n    contacts: uniqueContacts\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3072,
+        32
+      ],
+      "id": "d2013c40-5561-4f3b-ab92-aed96d02ae2c",
+      "name": "Fetching All the Contact"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\n\nreturn $input.first().json.contacts"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3536,
+        32
+      ],
+      "id": "2f7bbd91-a862-44b7-9e99-23d988e6929e",
+      "name": "Creating Contacts Iterations"
+    },
+    {
+      "parameters": {
+        "jsCode": "const contactId = $input.first().json.contact_id;\nconst contactName = $input.first().json.first_name;\nconst messages = $('Basic LLM Chain').first().json.text;\n\n// More flexible regex that handles various formats\nconst version1Match = messages.match(/Version 1:?\\s*([\\s\\S]*?)(?=Version 2:|$)/);\nconst version2Match = messages.match(/Version 2:?\\s*([\\s\\S]*?)$/);\n\nconst version1 = version1Match ? version1Match[1].trim() : '';\nconst version2 = version2Match ? version2Match[1].trim() : '';\n\n// Select version based on contactName existence\nlet selectedMessage = contactName && version1 ? version1 : version2;\n\n// Ensure we have a message to work with\nif (!selectedMessage) {\n  throw new Error('No valid message version found');\n}\n\n// Replace contact name placeholder if contactName exists\nif (contactName) {\n  selectedMessage = selectedMessage.replace(/\\{\\{contact\\.firstName\\}\\}/g, contactName);\n}\n\n// Replace user first name\nselectedMessage = selectedMessage.replace(/\\{\\{user\\.first_name\\}\\}/g, 'Tyler');\n\nreturn {\n  contactId,\n  contactName: contactName || null,\n  messages: selectedMessage.trim()\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4272,
+        32
+      ],
+      "id": "1a035271-7bff-42d1-b401-7a8ccdd76151",
+      "name": "Formating Data for SMS"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://services.leadconnectorhq.com/conversations/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "highLevelOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-04-15"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n\"type\": \"SMS\", \n  \"contactId\": \"{{ $json.contactId }}\",\n\"message\": {{ $json.messages.toJsonString() }}, \n  \"fromNumber\": \"+17373790256\",\n    \"status\": \"delivered\"\n\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4032,
+        352
+      ],
+      "id": "a780f939-38b9-4125-90cb-59b141771cf2",
+      "name": "Sending SMS to GHL Contacts",
+      "credentials": {
+        "highLevelOAuth2Api": {
+          "id": "NNd9SBcFPMnZuQBD",
+          "name": "HighLevel account 3"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "maxItems": 10
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -384
+      ],
+      "id": "67162505-2d57-4fe1-99ac-b824b806af43",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1_f59Y4oLCRYXTXe4rR6dBGZXWiR6kKhCxSCBYTqiKsM",
+          "mode": "list",
+          "cachedResultName": "The Ecom Capitalist SMS Agent",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_f59Y4oLCRYXTXe4rR6dBGZXWiR6kKhCxSCBYTqiKsM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_f59Y4oLCRYXTXe4rR6dBGZXWiR6kKhCxSCBYTqiKsM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "AI SMS": "={{ $('Edit Fields').first().json['AI Message'] }}",
+            "Tokens Used": "={{ $('Edit Fields').first().json['Token Usage'] }}",
+            "Status": "Completed",
+            "Date/Time": "={{ $('Edit Fields').first().json['Date/Time Execution'] }}",
+            "Total Contacts": "={{ $('Fetching All the Contact').item.json.total_contacts }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Date/Time",
+              "displayName": "Date/Time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AI SMS",
+              "displayName": "AI SMS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tokens Used",
+              "displayName": "Tokens Used",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Cost",
+              "displayName": "Cost",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Total Contacts",
+              "displayName": "Total Contacts",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        4272,
+        -160
+      ],
+      "id": "74cb01f0-3ab7-491a-b137-34907e55c5b9",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "6xvAeQfljWlkx2Md",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://services.leadconnectorhq.com/locations/JKnj28yA3xSLdBD6zLkk/tags",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "highLevelOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        -608
+      ],
+      "id": "a17702c2-5c13-41c2-84a6-1fbbd693704a",
+      "name": "HTTP Request",
+      "credentials": {
+        "highLevelOAuth2Api": {
+          "id": "NNd9SBcFPMnZuQBD",
+          "name": "HighLevel account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://services.leadconnectorhq.com/conversations/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "highLevelOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-04-15"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"type\": \"SMS\", \n  \"contactId\": \"ddfEpT9dyN0XK4xTfJWh\",\n  \"message\": \"Hey Norma,\\n\\ntotally get it if timing's been tough. But if building a profitable digital asset is still on your radar, now's the moment to take action.\\n\\nWe've got just a few free 5–10 min strategy call slots left.\\n\\nWant me to save you one before we close this round out?\\n\\n-Tyler from The Ecom Capitalist\", \n  \"fromNumber\": \"+17373790256\",\n  \"status\": \"delivered\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        -832
+      ],
+      "id": "6dc74010-767d-4f04-9d57-39c1fb7a7ac4",
+      "name": "Sending SMS to GHL Contacts1",
+      "credentials": {
+        "highLevelOAuth2Api": {
+          "id": "NNd9SBcFPMnZuQBD",
+          "name": "HighLevel account 3"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        4048,
+        -64
+      ],
+      "id": "b5d35c96-ada3-4928-bc50-724b549d780e",
+      "name": "Aggregate1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d2abb9ea-ed5d-4780-8c69-148676fc9238",
+              "name": "Date/Time Execution",
+              "value": "={{ $('Schedule Trigger').item.json.timestamp ? $('Schedule Trigger').item.json.timestamp : $now.format('yyyy-MM-dd HH:MM') }}",
+              "type": "string"
+            },
+            {
+              "id": "a42f051a-4eac-4ba8-9b47-40f915be0496",
+              "name": "AI Message",
+              "value": "={{ $('Basic LLM Chain').item.json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "4b493481-15a9-4efb-b234-c9ad51b4f12d",
+              "name": "Token Usage",
+              "value": "={{ $json.totalTokens }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1456,
+        304
+      ],
+      "id": "1a140e88-f96c-470f-a6a3-47bb5644a53f",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {
+    "HTTP Request": [
+      {
+        "json": {
+          "tags": [
+            {
+              "id": "94qtEPyOJbeqUNhjOmH7",
+              "name": "",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "78UdSTOc0AKxYppm5dat",
+              "name": "08-08-2025 02:00 pm",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "ClA15eX1d5q3fmoA0n0p",
+              "name": "08-13-2025 05:00 pm",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "34axyMAjN23xml6V8P47",
+              "name": "08-15-2025 02:00 pm",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "z6TogiG0BCPCGldqUezO",
+              "name": "10000contract",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "ERY3QvQJV3YcOYE4XPsS",
+              "name": "10k<capital",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "IbUeJAwvfGVfZ10wvnKz",
+              "name": "12k",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "qOD7OFnTudAWx9LJlpOE",
+              "name": "15000contract",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "Avozb7iWtPCGSIasOcDa",
+              "name": "1500aj",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "8p7ATSBzHL2BUkyEiGUN",
+              "name": "21day7500contract",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "kSpFE2YAgLYu5QWnGrhg",
+              "name": "35k shopify",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "c5gwFi6aIkMX7LK9GGOq",
+              "name": "500 deposit",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "ixHoBQh8ybkGfL72PVbL",
+              "name": "500 shopify",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "94w7WEEhU3geh2J3RSlo",
+              "name": "5dc-optin",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "fes6pdMlH6iMJtOqt79c",
+              "name": "5dc-optin applicant",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "DS2qqX7xHMVbocRwcP7C",
+              "name": "5k deposit",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "ADaYxbyf2dDoNUerjeew",
+              "name": "5k deposit shopify",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "UfuXcZkxC74dCq3qjhVw",
+              "name": "5k shopify",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "KIvPsAtjPTWYta9vn68N",
+              "name": "7500",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "WMpIBy8S5NWWcFmsXNHK",
+              "name": "7500contract",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "jaEMyIyGtFJZOmFdgIoq",
+              "name": "7500paid",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "7g54iCJKj0YW6d4kHxiv",
+              "name": "7500paidcc",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "yKeRPaCnExwyM93bTvJy",
+              "name": "7800paid",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "19BNG1eXMzxdAyqIuY0I",
+              "name": "8500contract",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "9HTTTAgdcMYA8SpGvZO4",
+              "name": "abandoned",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "AH2rjqpZPsYgxCA9Ev93",
+              "name": "active conversation",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "zOPnqr3ZqVvi22YB9b2o",
+              "name": "agreement questions",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "cDarPgue4miHkr1KIF17",
+              "name": "aj-drl1",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "OV60GIZHZjfxQFJ60dly",
+              "name": "aj-drl2",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "izd8i2X2Api5k0jLwwLV",
+              "name": "ajleads",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "93EtejYnu5ITHqLNcwoO",
+              "name": "ajleads (emails)",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "9cuwiV28RxjVNlvBfMUP",
+              "name": "ajleads 2",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "IB8cLnjXw2sUEzCu8sLt",
+              "name": "ajleads 3",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "HdGJ4ZUoiYR4BK5sfWg3",
+              "name": "ajleads_blast_1",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "cJLiAkELhex0SSeZj04k",
+              "name": "already applied",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "AtZuxw8jhrKjHolTlbQH",
+              "name": "amazon",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "QByfcbPlBf5LgPNbTknM",
+              "name": "amazon automation leads",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "nNRhqKVzeT0xsdBpT5pA",
+              "name": "amazon info",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "OvLBkA3ZvFgCxItpzM8K",
+              "name": "another company",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "hL8HyWzBgKZO53tcoSGj",
+              "name": "another opportunity",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "e5xKNT028FuHwyPcF8e8",
+              "name": "application filled",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "qgWPX1lSIFAxYKEkgK8R",
+              "name": "apr 2021",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "bOKccJ68UxtKkpwY7VTQ",
+              "name": "asked for too much",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "IdeYWj6N5bDnDfIBMHSe",
+              "name": "assign to ben",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "Sr41C3RE106BRkGAekgs",
+              "name": "assignedruby",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "huNhfnU8OKww2k1ERcJC",
+              "name": "aug 2021",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "EKRdHiX9ZocTjnB9ECkp",
+              "name": "austin",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "VLzCtxVEkZyonOjJ9Src",
+              "name": "austin-in-person-event-interested",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "B4wucVUN6bVzs3ZHKEnp",
+              "name": "auto-webinar attended",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "mxUM7FmcouH7MtaCAhES",
+              "name": "auto-webinar missed",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "mHwrh36QYryoqM0TKGG2",
+              "name": "auto-webinar registered",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "TxTERGvTxijC1fMgepRC",
+              "name": "auto-webinar: attended",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "dReeqJ8zW0bj9FuAiOg9",
+              "name": "auto-webinar: booked call",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "3Vnbpn7HwbkRR1zOCjRG",
+              "name": "auto-webinar: missed",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "vqkmy6vKUhIojrZrILZa",
+              "name": "auto-webinar: registered",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "7P9zVcIQMoEPiz7IICDf",
+              "name": "bad fit",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "tiItURF7UvFsXoRCLDY9",
+              "name": "bad lead",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "vZ2ULe9F5FzKgFv8ScSV",
+              "name": "bankruptcy",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "xTsxBwmTzmzc1UkaKUq9",
+              "name": "ben carroll",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "OgJBCTl2wA6QM9DFZQl3",
+              "name": "booked a call",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "4ilRJB7rHTSjqdKerzgC",
+              "name": "call 1",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "cKHGORGuMQCleVvZ76TP",
+              "name": "call 1 no show",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "WT4GJoPHAW7Lzyfi2Kel",
+              "name": "call 2 confirmed",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "fjYmWQ6vgDA17ZqzXsg8",
+              "name": "call 3",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "9rkJaYvpZC9dK39mVAhP",
+              "name": "call 3 no show",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "tohIzwBQt5sszXceesgq",
+              "name": "call-booked",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "XfRoIidjJMIg2lfYg8kV",
+              "name": "call-booked-before",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "3mc0fUdpzsCRxSzPHbJL",
+              "name": "call-cancelled",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "V5pXKpEYxBzwvlMeHnDr",
+              "name": "cancelled 1",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "qtTH4ANv8glxFBxOztGv",
+              "name": "cancelled call 2",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "k3cJdzEbPCL4ed0KK0qr",
+              "name": "card_update_form_submitted",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "0ifxgZ7TE09tCK649fHH",
+              "name": "chauntel",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "xuadm9Dhn49VeFGuhDzC",
+              "name": "clicked ajleads-email 1 link",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "88gjy6KMA3m7OuJE0gWo",
+              "name": "client",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "vkjVOl4zJ8FqNbF5gak5",
+              "name": "committed to close",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "HClifn9wdT6KI0Wxu6l7",
+              "name": "complained - unsubscribed",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "P19hNfhjDwNnDVLKzrHE",
+              "name": "confirmed appointment",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "jNx2jWS9IxWAtKkSdYaS",
+              "name": "contractsigned",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "Bs6yI4MjYiK404zYvwk9",
+              "name": "couldn't find caller name",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "AqcZ157qNgyifDAFTaHq",
+              "name": "crazy",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "Dsn0LDGwBHgzuhIqbbQt",
+              "name": "crm glitch",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "26eUjMpCaoQOCqsiMMz4",
+              "name": "danny referral",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "4TQFPMcBxBxat4hxSGKj",
+              "name": "december",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "u7qgSdK5ne4x2ozAxpl0",
+              "name": "deposit refund",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "XsVoaHVlPRJh0EIk6eIQ",
+              "name": "did not confirm",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "zC8S7FzpSuAinSf7IcjS",
+              "name": "digital altitude 1-2000",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "wed1JYSLVqF3vqmu8rqU",
+              "name": "digital altitude 2001-4000",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "RlyznY4aohNSoaLxXMcx",
+              "name": "disqualified for now",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "q8N4BrIQpWzS1yLZU3HR",
+              "name": "dnd",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "oqBCuau2TXwxbhjU02Vz",
+              "name": "dnd sms",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "qv9a0JLX78bK5yUzuP8N",
+              "name": "do not",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "CsdAt1266IBDIkhxvmrd",
+              "name": "do not blast",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "YP8siz4RxBlayj7258qz",
+              "name": "doing it himself",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "d0DHwU0MPowWOQkwKCQH",
+              "name": "donotblast",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "gLTsgmuQkUuDBLRD9GPn",
+              "name": "donotblast_30_days",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "Vv6zuiZpJliT6PlDzCwC",
+              "name": "dq",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "Ry8MGy77H6QeQHOm1s6d",
+              "name": "dropshipping lead",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "yUbLW03X1cvXNKK0RIR5",
+              "name": "ecom-appt-booked",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "aGHlvTClbl9N5WA1VFzI",
+              "name": "ecom-fb-ad-lead",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "559gh4YH5QkNRWaC29iP",
+              "name": "ecom-optin",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "v9V1ayLC4d6n3HCsJLGg",
+              "name": "ecom-precall-survey-completed",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "9ggAXHlNWc8SMHl0j9wM",
+              "name": "ecom-subscriber",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "aaDsGApNqFdsnK8Lv0o0",
+              "name": "elijah",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "Pz9jKskZY2gEO2OCHQxU",
+              "name": "employee",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "6cHqQ8Din6aNAj81L0w6",
+              "name": "evans bia",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "qlye2dWpt7nB8oXmA7EG",
+              "name": "event1 attended 01-30-2025 01:00 pm",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "9O1ixZcX4r9tV7iI3jrK",
+              "name": "event1 attended 08-01-2025 02:00 pm",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "XQkSHDqHQmUBP6iJc3sJ",
+              "name": "event1 attended 08-08-2025 02:00 pm",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "NNnHN0R1gydSZMn5fGRO",
+              "name": "event1 attended 08-13-2025 05:00 pm",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "30m4gvawOgxFwAphy2DM",
+              "name": "event1 attended august 13 2025 14:00:00",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "s4J6e1TCMg3TNXrlOp57",
+              "name": "event1 attended august 13 2025 21:22:42",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "zgLoXZAwDODK4lPlf0by",
+              "name": "event1 attended august 13 2025 21:25:47",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "MlUVOzYzjybXG9bb9dRJ",
+              "name": "event1 attended august 13 2025 21:56:31",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "4LjmO80jPa2gKGDViIBZ",
+              "name": "event1 attended {{inboundwebhookrequest.webinar date}}",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "tw9EE9huAKoXjPU9URPS",
+              "name": "event1 registered 01-23-2025 06:00 pm",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "MZTzYHUybd8i107Xvtf8",
+              "name": "event1 registered 01-30-2025 01:00 pm",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "dhlnDu9CbQxB04Bwh2SM",
+              "name": "event1 requested application 01-23-2025 06:00 pm",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "9GFbabwnMG0T0zzqfcKu",
+              "name": "event1-applied",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "6Euzes5NOoS88Ro3BGgZ",
+              "name": "event1-registered",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "G8oyt7pwliATMSzg7jkW",
+              "name": "facebook organic",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "yIaLgwenn3ZjzoxEnZav",
+              "name": "fb ads booked calendar",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "lRLhZJnvWgx9X93bCqeI",
+              "name": "financing",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "3179KzFPSp1E0QXItWfO",
+              "name": "form: workshop step 1",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "qy8XK6ElGwzVZgnUEwnU",
+              "name": "found solution",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "mSplzJDQeaWrOeqsu1WX",
+              "name": "ghosted",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "k7dS6tFbaKjSfysHFpgA",
+              "name": "greg re sms list",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "TJADS9GBi4A6i5eQjMLT",
+              "name": "gulleads",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "zuB1CNoLnPC1wWq5Fszk",
+              "name": "hot list",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "9jWjAzxV2iGy9bwykLGF",
+              "name": "interested",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "8NDKSwTlatqneni9AEQ7",
+              "name": "jake bell",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "h5bFmsojWDHdOemopV87",
+              "name": "jeremy re sms list",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "s7rQNLIh6QC7y1gJsBHe",
+              "name": "joined-fb-group",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "GP7AXujt7SfRlqw8d6Jk",
+              "name": "juanjo",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "cMmsrSAiotUDksF0uKAq",
+              "name": "landline",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "gZM76e1uI049NQKtKD1M",
+              "name": "liquidating",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "vQGGC9wPNv8T4rhXZmXO",
+              "name": "looking at options",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "8dy0klhxcuo1Wp7hYf8M",
+              "name": "lost-offer-made",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "wt7ntkDcbQ2ygHQsGamd",
+              "name": "lots of questions",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "iEa4ZMvTeCmHAxxfIuKt",
+              "name": "luke warm",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "EUTc6haiNueyMqF9rxKz",
+              "name": "mary re sms list",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "lEZopyn3HYbzeVLJXQlY",
+              "name": "mary voicemail",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "1ZnLOTuSkdGE3ksS12V3",
+              "name": "mid-end september",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "LAjDl07s6vYEm3XiTIG1",
+              "name": "mishal's lead",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "iADLvkI5wkZBwjsIxGqz",
+              "name": "missed call",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "ygFZ75HlSxZmNcqL8ClV",
+              "name": "mistakeblast",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "s9UkfYToq9HFXJIi1Juu",
+              "name": "mobe_buyers1",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "lgDUZH24FgwrovXXmbCf",
+              "name": "money in ntf instead",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "TDL1nqs1QPDg3nQ4Puic",
+              "name": "name via lookup",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "r7CLy3MUrIrtKn9nIltN",
+              "name": "new hire",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "JXh3oeMZnWLVuf91SZvI",
+              "name": "no call 2",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "tyG1TpsgQs0EppCeFCRG",
+              "name": "no confirmation",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "qKNeIFmhVeA42CCx0ExV",
+              "name": "no response",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "99yZ4emskkShyukC1MRV",
+              "name": "no show",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "Dwg5UER1mVPA5o7xzh45",
+              "name": "no show 2",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "9c05QlEOMZcHIv7hAIsr",
+              "name": "non vip",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "rm5ezZ51m4RcdLqjjeKp",
+              "name": "not interested",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "7hQgu1v3tVJXzmu74DPw",
+              "name": "not-interested-live-event",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "UEgmAIzfsPnSGcLtiNMD",
+              "name": "nov 2021",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "Ckvavlifx9a2DR5fWpvJ",
+              "name": "november",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "O7PggcgTqXIMSAAV7tKM",
+              "name": "oct 2021",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "1yQ8PksfmrFQeRL3kaQR",
+              "name": "october/november",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "UmI1vS8fx8cLSJWYoT5F",
+              "name": "old deposit",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "159C9eUb2u375rXZoJKP",
+              "name": "organic",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "TAPAIqldUFEHbcyqtF5f",
+              "name": "past challenger",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "3AIXXJyGT5Ee30qEuC2r",
+              "name": "pif by sep",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "ARITlFMdzkI5VnJMpVtb",
+              "name": "pride",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "vsO3acKL9CGaSJKYJwyk",
+              "name": "purchased elite",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "K3iaT8GmP3VFk6M45DN7",
+              "name": "referral",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "TvlkXTGLVaLHqQP7fuw9",
+              "name": "remove dnd sms",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "NhNgh0OXfyBRKWkfJSw3",
+              "name": "rescheduled",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "IiHPY2ZJ8QyxpXUD45qn",
+              "name": "rescheduled 1",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "iNaPueTqD6bl5ZJ4MYMQ",
+              "name": "rsvp-austin-event",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "Ma3komzn8jthX5zXmkMd",
+              "name": "saad ahsan cold campaign",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "VS7a8EOXm1lVe99cSi5C",
+              "name": "saad campaign response",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "afVMQTexNraANVlyu8OA",
+              "name": "said-yes-to-in-person-event-text-blast",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "H5mBzfWcxhgR9kSiItu3",
+              "name": "sales rep",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "Wqo1EDg6q9KUGVyiAcZy",
+              "name": "salesostin lead",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "68nYbNeXf8gL8ixmePQH",
+              "name": "sep 2021",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "l599J6UPShgTgDptwiJw",
+              "name": "sep 2021 2",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "YLhZQPcfUWzKPsqkQtvH",
+              "name": "shopify to the moon",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "LA2DZp6xlQbCKGFW43wu",
+              "name": "skeptical",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "5F67Y1S9yptWYzJ4S0qY",
+              "name": "sms confirmation",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "FWQB9eof9iqrLOzk07Tt",
+              "name": "sms_9_10_2025",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "4NY1XWGrNiKZP3piJj4Z",
+              "name": "spam",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "SH6ENLGmOzWMoNaXsrPK",
+              "name": "spam likely",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "wxW7P4ipMLCAojgbp89y",
+              "name": "team member",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "kmcvLI6kbzmaCyRzkT4b",
+              "name": "team-member",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "vrnnAU4sYbOVg7Tmb1oQ",
+              "name": "test",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "4JKkqaXLDukRPaTMRORW",
+              "name": "test_client_asana_automation",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "WJ1rmWUvpHdAk5IGQiV3",
+              "name": "time waster",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "rwnsMN8JDlPNewuXZpaG",
+              "name": "tyler re sms list",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "SJWYx4hH3xzIo9kOVnCk",
+              "name": "tyler voicemail",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "yjjDQroCvzWO2UApQ8Vy",
+              "name": "tyler's own list",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "PsVKLsNjQV5WbjJ2PuxA",
+              "name": "unsubscribed",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "l4roCyRZOrbSGh3pkaAF",
+              "name": "vip apr 2021",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "DXXvgG4f6h0dwddLG0bX",
+              "name": "vip aug 2021",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "RNLQgmuXvJYiHByGsxcL",
+              "name": "vip sep 2021",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "TJPQPndYjLbAdGMeP46O",
+              "name": "vip sep 2021 2",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "RBQpTZiELbvCsFkjPoOe",
+              "name": "vsl",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "2hjHXPRWwifrlsuNUkfG",
+              "name": "walmart 25k",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "OZCPj9Z1gq1dUiqP8L5K",
+              "name": "walmart 30k",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "HuikFvcQvhFKhJoyB6Fp",
+              "name": "warm",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "lMMmE0nmyt4PTjkGP2uG",
+              "name": "webinar attended",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "uVXowYgfQcfBFCk41FT5",
+              "name": "webinar attended & booked call",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "hEl7ieaZntoPsay64x8d",
+              "name": "webinar attended & booked call 8-1-25",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "3JNSjojIZYDplVJmSGHL",
+              "name": "webinar attended & did not book a call",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "S20rI27F1auvuP0aNDfd",
+              "name": "webinar attended & dq",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "jbOMmk4QzHx0MRkYTLgI",
+              "name": "webinar attended 8-1-25",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "6vOtNBKhL4sJ74Xg8ZCF",
+              "name": "webinar booked a call 08-08-2025 02:00 pm",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "39I04IGIaz1vnSqu3yha",
+              "name": "webinar booked a call 08-13-2025 05:00 pm",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "m9Zujz3IloGroC4cJPfQ",
+              "name": "webinar booked a call 08-15-2025 02:00 pm",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "BepKIB0CxVecgT47VCcZ",
+              "name": "webinar booked a call {{custom_values.event_date_exact_day_1}}",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "eALd0p9Bsv3vF5Vt3qJ5",
+              "name": "webinar email 1 sent",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "JRmV7GRQKMeSFHnSzGng",
+              "name": "webinar missed",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "qen1vK3poxi55b0bOMl8",
+              "name": "webinar one time tag: 8.8.25 registered",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "rZPOHXxLSLISUzHvitdH",
+              "name": "webinar opted in to bonuses",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "QjpPzbVqQIC5zPMxQq2B",
+              "name": "webinar registered",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "TUzNuiPtE6WkyGKdgdZm",
+              "name": "webinar registered 07-30-25 02:00 pm",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "hQ5HWrr4upziBca8WnxU",
+              "name": "webinar registered {{custom_values.event_date_exact_day_1}}",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "qnVbnA6TLI6LIwM5TP33",
+              "name": "won",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            },
+            {
+              "id": "OVuG7TZmRwFy4g6vOm0Y",
+              "name": "won 35k",
+              "locationId": "JKnj28yA3xSLdBD6zLkk"
+            }
+          ],
+          "traceId": "043bcde4-12da-4ec3-b334-e7b01bba1abb"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Formatting Previous Message for AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Calculating Total Tokens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Fetching All the Contact",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Setting Dynamic GHL Request Body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Contact GHL1": {
+      "main": [
+        [
+          {
+            "node": "Storing Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Contact GHL": {
+      "main": [
+        [
+          {
+            "node": "Creating Iterations for Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Formating Data for SMS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formatting Previous Message for AI": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculating Total Tokens": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Creating Iterations for Loop": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Setting Dynamic GHL Request Body": {
+      "main": [
+        [
+          {
+            "node": "Get Contact GHL1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Storing Contact": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetching All the Contact": {
+      "main": [
+        [
+          {
+            "node": "Creating Contacts Iterations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Creating Contacts Iterations": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formating Data for SMS": {
+      "main": [
+        [
+          {
+            "node": "Sending SMS to GHL Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sending SMS to GHL Contacts": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        []
+      ]
+    },
+    "Aggregate1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Get Contact GHL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "da1e628b-fb6d-4164-99ff-3b9897432940",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c7c4f12789a3847b1dd10ab05d724f2cc5d365c32e4354deb25042d8b63f1a2d"
+  },
+  "id": "3brq58NIJR3V1tjD",
+  "tags": []
+}

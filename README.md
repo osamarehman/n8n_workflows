@@ -450,7 +450,7 @@ Featured example workflows for common use cases.
 
 1. **Clone this repository**
    ```bash
-   git clone https://github.com/yourusername/n8n_workflows.git
+   git clone https://github.com/osamarehman/n8n_workflows.git
    ```
 
 2. **Import workflows into n8n**
